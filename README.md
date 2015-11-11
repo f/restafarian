@@ -12,29 +12,26 @@ npm install restafarian --save
 ```
 import {Client} from 'restafarian';
 
-const {base, get, post} = new Client('http://api.example.com/v1');
+const {get, post, request} = new Client('http://api.example.com/v1');
 
-@base('/users')
 class Users {
 
-  @get('/')
-  getUsers() {
-    return (request, response) => {
-      this.users = response;
-    }
+  @get('/users')
+  getUsers(data) {
+    return request(data);
   }
   
-  @get('/:id')
-  getUser(id) {
-    return {id};
+  @get('/users/:id')
+  getUser(data) {
+    return request(data);
   }
   
-  @post('/')
+  @post('/users')
   createUser(data) {
-    return {data};
+    return request(data);
   }
 }
 
 var users = new Users();
-var user = users.getUser(1);
+var user = users.getUser({id: 1}).then(() => {});
 ```
